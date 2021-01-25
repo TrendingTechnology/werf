@@ -300,6 +300,10 @@ func (c *Conveyor) GetOrCreateGitRepoCache(gitRepoName string) *stage.GitRepoCac
 	return c.gitReposCaches[gitRepoName]
 }
 
+func (c *Conveyor) GiterminismManager() giterminism_manager.Interface {
+	return c.giterminismManager
+}
+
 func (c *Conveyor) GetLocalGitRepo() git_repo.Local {
 	return c.localGitRepo
 }
@@ -1199,7 +1203,7 @@ func prepareImageBasedOnImageFromDockerfile(ctx context.Context, imageFromDocker
 			imageFromDockerfileConfig.SSH,
 		),
 		ds,
-		stage.NewContextChecksum(c.projectDir, dockerignorePathMatcher, c.GetLocalGitRepo()),
+		stage.NewContextChecksum(dockerignorePathMatcher),
 		baseStageOptions,
 	)
 
